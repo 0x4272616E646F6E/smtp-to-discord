@@ -1,4 +1,5 @@
-# smtp-to-discord
+[![Go Report Card](https://goreportcard.com/badge/github.com/0x4272616E646F6E/smtp-to-discord)](https://goreportcard.com/report/github.com/0x4272616E646F6E/smtp-to-discord)
+# SMTP to Discord
 
 `smtp-to-discord` is a lightweight, containerized Go application that runs a minimal SMTP server and relays received email messages to a Discord channel via webhook. Ideal for infrastructure alerts, internal system notifications, or bridging legacy SMTP tools into modern workflows.
 
@@ -23,15 +24,42 @@
 - Docker (optional for container use)
 - A Discord Webhook URL ([how to get one](https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks))
 
----
 
-### 🧪 Run Locally
+
+### Docker Run
 
 ```sh
-git clone <your-repo-url>
+docker run -d \
+  --name smtp-to-discord \
+  -e DISCORD_WEBHOOK_URL="https://discord.com/api/webhooks/your_webhook_id/your_webhook_token" \
+  -p 2525:25 \
+  ghcr.io/0x4272616e646f6e/smtp-to-discord:main
+```
+
+### Docker-Compose
+
+```sh
+version: '3.8'
+
+services:
+  smtp-to-discord:
+    image: ghcr.io/0x4272616e646f6e/smtp-to-discord:main
+    container_name: smtp-to-discord
+    ports:
+      - "25:25"
+    environment:
+      - DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/your_webhook_id/your_webhook_token
+    restart: unless-stopped
+```
+
+### 🧪 Building and Testing
+
+```sh
+git clone https://github.com/0x4272616E646F6E/smtp-to-discord.git
 cd smtp-to-discord
 export DISCORD_WEBHOOK_URL="https://discord.com/api/webhooks/your_webhook_id/your_webhook_token"
 go run ./cmd/main.go
+```
 
 ### Running with Docker
 
