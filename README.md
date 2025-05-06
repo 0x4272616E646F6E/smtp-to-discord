@@ -64,4 +64,4 @@ The application supports graceful shutdown on SIGINT/SIGTERM. It will stop accep
 - `internal/discord/client.go` — Discord webhook integration
 
 ## License
-MIT
+[MIT](LICENSE)
